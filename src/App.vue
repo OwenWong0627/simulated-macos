@@ -1,17 +1,22 @@
 <template>
     <div class="homescreen-container">
-        <div
-            v-for="app in apps"
-            :key="app.name"
-            class="app-container"
-            @click="toggleApp(app.nickName)"
-        >
-            <img :src="app.icon" :alt="app.name" class="app-icon" />
-            <p class="app-name">{{ app.name }}</p>
+        <div class="navbar">
             <div
-                v-if="visibleApps[app.nickName]"
-                class="app-open-indicator"
-            ></div>
+                v-for="app in apps"
+                :key="app.name"
+                class="app-container"
+                @mousedown="handleMouseDown(app.nickName)"
+                @mouseup="handleMouseUp(app.nickName)"
+                @mouseleave="handleMouseLeave(app.nickName)"
+                :class="{ pressed: isPressed[app.nickName] }"
+            >
+                <img :src="app.icon" :alt="app.name" class="app-icon" />
+                <div
+                    v-if="visibleApps[app.nickName]"
+                    class="app-open-indicator"
+                ></div>
+                <div class="tooltip">{{ app.name }}</div>
+            </div>
         </div>
 
         <!-- App windows -->
@@ -73,12 +78,12 @@ export default defineComponent({
         const apps = reactive([
             {
                 name: "About Me",
-                icon: new URL("./assets/resume.png", import.meta.url),
+                icon: new URL("./assets/profile.png", import.meta.url),
                 nickName: "aboutMe",
             },
             {
                 name: "Experience",
-                icon: new URL("./assets/resume.png", import.meta.url),
+                icon: new URL("./assets/experience.png", import.meta.url),
                 nickName: "experience",
             },
             {
@@ -88,11 +93,12 @@ export default defineComponent({
             },
             {
                 name: "Projects",
-                icon: new URL("./assets/resume.png", import.meta.url),
+                icon: new URL("./assets/project.png", import.meta.url),
                 nickName: "projects",
             },
         ]);
         const visibleApps = reactive({});
+        const isPressed = reactive({});
         const zIndexes = reactive({});
         const maxZIndex = ref(10);
         let ds: DragSelect | null = null;
@@ -104,6 +110,21 @@ export default defineComponent({
                 visibleApps[appName] = true;
                 zIndexes[appName] = maxZIndex.value++;
             }
+            console.log(visibleApps);
+        };
+
+        const handleMouseDown = (appName) => {
+            isPressed[appName] = true;
+        };
+        const handleMouseUp = (appName) => {
+            if (isPressed[appName]) {
+                toggleApp(appName);
+                isPressed[appName] = false;
+            }
+        };
+
+        const handleMouseLeave = (appName) => {
+            isPressed[appName] = false;
         };
 
         const closeApp = (appName: string) => {
@@ -117,6 +138,7 @@ export default defineComponent({
             ds = new DragSelect({
                 selectables: document.querySelectorAll(".draggable-window"),
                 area: document.querySelector(".homescreen-container"),
+                ignore: [".navbar", ".navbar *"],
                 onDragStart: (element) => {
                     const appName = element.getAttribute("data-app");
                     zIndexes[appName] = maxZIndex.value++;
@@ -127,6 +149,7 @@ export default defineComponent({
                         element.classList.add("selected");
                     });
                 },
+                ignore: [".navbar, .navbar *"],
             });
         }
 
@@ -144,44 +167,113 @@ export default defineComponent({
             { deep: true }
         );
 
-        return { apps, visibleApps, toggleApp, closeApp, zIndexes };
+        return {
+            apps,
+            visibleApps,
+            toggleApp,
+            closeApp,
+            zIndexes,
+            isPressed,
+            handleMouseDown,
+            handleMouseUp,
+            handleMouseLeave,
+        };
     },
 });
 </script>
 
 <style>
 .homescreen-container {
-    position: absolute;
-    bottom: 0;
+    position: fixed;
+    top: 0;
     left: 0;
     right: 0;
+    bottom: 0;
     display: flex;
-    flex-direction: row; /* Ensures children are stacked vertically */
-    justify-content: flex-end; /* Aligns the app-container to the bottom */
-    padding: 20px 40px;
-    background-color: rgba(255, 255, 255, 0.8);
+    flex-direction: column;
+    justify-content: flex-end; /* Keeps the navbar at the bottom */
+    align-items: center;
+    padding: 20px 40px 0 40px;
+    background-image: url("./assets/Background.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
-    z-index: 1000; /* Ensure it is above other content */
+    z-index: 1000;
 }
 
-.app-open-indicator {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: black;
-    margin-top: 5px;
+.navbar {
+    max-width: 80%; /* Controls the width of the navigation bar */
+    min-width: 12.5%;
+    display: flex;
+    justify-content: space-between; /* Distributes space between app icons */
+    background: rgba(255, 255, 255, 0.5);
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    width: 60px;
+    height: 60px;
 }
 
 .app-container {
-    width: 100%;
-    display: absolute;
-    bottom: 0;
-    justify-content: center;
-    gap: 40px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
     transition: transform 0.3s ease;
-    padding: 10px;
-    background: rgba(250, 250, 250, 0.9);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.app-open-indicator {
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: black;
+}
+
+.app-icon {
+    width: 57px;
+    height: 57px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.pressed .app-icon {
+    filter: brightness(70%);
+    opacity: 0.6;
+}
+
+.tooltip {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.app-container:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+.app-name {
+    margin-top: 8px;
+    font-size: 14px;
+    color: #333;
+    text-align: center;
 }
 
 .draggable-window {
@@ -193,25 +285,5 @@ export default defineComponent({
     padding: 15px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.app-icon {
-    width: 60px;
-    height: 60px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.app-name {
-    margin-top: 8px;
-    font-size: 14px;
-    color: #333;
-    text-align: center;
-}
-
-.app-container:hover,
-.app-container:focus {
-    transform: scale(1.1);
-    outline: none; /* Accessibility: Outline on focus for keyboard navigation */
 }
 </style>
