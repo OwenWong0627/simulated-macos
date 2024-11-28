@@ -11,22 +11,34 @@
     </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from "vue";
+
+export default defineComponent({
     methods: {
-        startDrag(event) {
-            // Initialize dragging
+        startDrag(event: MouseEvent) {
+            // Prevent the default behavior and stop propagation
             event.preventDefault();
-            const element = event.target.closest(".draggable-window");
-            let startX = event.clientX;
-            let startY = event.clientY;
+            event.stopPropagation();
+
+            const target = event.target as HTMLElement;
+            if (!target) return;
+            const element = target.closest(".draggable-window") as HTMLElement;
+            if (!element) return;
+
+            if (window.ds && typeof window.ds.break === "function") {
+                window.ds.break();
+            }
+
+            let startX: number = event.clientX;
+            let startY: number = event.clientY;
             let initialLeft = parseInt(
                 window.getComputedStyle(element).left,
                 10
             );
             let initialTop = parseInt(window.getComputedStyle(element).top, 10);
 
-            const onDragging = (moveEvent) => {
+            const onDragging = (moveEvent: MouseEvent) => {
                 const dx = moveEvent.clientX - startX;
                 const dy = moveEvent.clientY - startY;
                 element.style.left = `${initialLeft + dx}px`;
@@ -36,13 +48,16 @@ export default {
             const stopDrag = () => {
                 document.removeEventListener("mousemove", onDragging);
                 document.removeEventListener("mouseup", stopDrag);
+                if (window.ds && typeof window.ds.start === "function") {
+                    window.ds.start();
+                }
             };
 
             document.addEventListener("mousemove", onDragging);
             document.addEventListener("mouseup", stopDrag);
         },
     },
-};
+});
 </script>
 
 <style scoped>

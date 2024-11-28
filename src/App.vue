@@ -1,5 +1,6 @@
 <template>
     <div class="homescreen-container">
+        <div class="drag-select-area"></div>
         <div class="navbar">
             <div
                 v-for="app in apps"
@@ -56,7 +57,6 @@ import {
     defineComponent,
     ref,
     reactive,
-    watchEffect,
     onUnmounted,
     onMounted,
     watch,
@@ -67,6 +67,24 @@ import Experience from "./components/Experience.vue";
 import Resume from "./components/Resume.vue";
 import Projects from "./components/Projects.vue";
 
+interface App {
+    name: string;
+    icon: string;
+    nickName: string;
+}
+
+interface VisibleApps {
+    [key: string]: boolean;
+}
+
+interface IsPressed {
+    [key: string]: boolean;
+}
+
+interface ZIndexes {
+    [key: string]: number;
+}
+
 export default defineComponent({
     components: {
         AboutMe,
@@ -75,55 +93,71 @@ export default defineComponent({
         Projects,
     },
     setup() {
-        const apps = reactive([
+        const apps = reactive<App[]>([
             {
                 name: "About Me",
-                icon: new URL("./assets/profile.png", import.meta.url),
+                icon: new URL(
+                    "./assets/profile.png",
+                    import.meta.url
+                ).toString(),
                 nickName: "aboutMe",
             },
             {
                 name: "Experience",
-                icon: new URL("./assets/experience.png", import.meta.url),
+                icon: new URL(
+                    "./assets/experience.png",
+                    import.meta.url
+                ).toString(),
                 nickName: "experience",
             },
             {
                 name: "Resume",
-                icon: new URL("./assets/resume.png", import.meta.url),
+                icon: new URL(
+                    "./assets/resume.png",
+                    import.meta.url
+                ).toString(),
                 nickName: "resume",
             },
             {
                 name: "Projects",
-                icon: new URL("./assets/project.png", import.meta.url),
+                icon: new URL(
+                    "./assets/project.png",
+                    import.meta.url
+                ).toString(),
                 nickName: "projects",
             },
         ]);
-        const visibleApps = reactive({});
-        const isPressed = reactive({});
-        const zIndexes = reactive({});
-        const maxZIndex = ref(10);
+        const visibleApps = reactive<VisibleApps>({});
+        const isPressed = reactive<IsPressed>({});
+        const zIndexes = reactive<ZIndexes>({});
+        const maxZIndex = ref<number>(10);
         let ds: DragSelect | null = null;
+        const updateZIndex = (appName: string) => {
+            maxZIndex.value++;
+            zIndexes[appName] = maxZIndex.value;
+        };
 
         const toggleApp = (appName: string) => {
             if (visibleApps[appName]) {
                 visibleApps[appName] = false;
             } else {
                 visibleApps[appName] = true;
-                zIndexes[appName] = maxZIndex.value++;
+                updateZIndex(appName);
+                console.log(zIndexes);
             }
-            console.log(visibleApps);
         };
 
-        const handleMouseDown = (appName) => {
+        const handleMouseDown = (appName: string) => {
             isPressed[appName] = true;
         };
-        const handleMouseUp = (appName) => {
+        const handleMouseUp = (appName: string) => {
             if (isPressed[appName]) {
                 toggleApp(appName);
                 isPressed[appName] = false;
             }
         };
 
-        const handleMouseLeave = (appName) => {
+        const handleMouseLeave = (appName: string) => {
             isPressed[appName] = false;
         };
 
@@ -132,38 +166,64 @@ export default defineComponent({
         };
 
         function initDragSelect() {
-            if (ds) {
-                ds.stop(); // Cleanup before re-initializing
+            if (window.ds) {
+                window.ds.stop();
             }
-            ds = new DragSelect({
-                selectables: document.querySelectorAll(".draggable-window"),
-                area: document.querySelector(".homescreen-container"),
-                ignore: [".navbar", ".navbar *"],
-                onDragStart: (element) => {
-                    const appName = element.getAttribute("data-app");
-                    zIndexes[appName] = maxZIndex.value++;
-                    element.style.zIndex = zIndexes[appName].toString();
-                },
-                callback: (elements) => {
-                    elements.forEach((element) => {
-                        element.classList.add("selected");
+
+            const area = document.querySelector(".drag-select-area");
+            if (area instanceof HTMLElement) {
+                // Use setTimeout to ensure all DOM elements are rendered
+                setTimeout(() => {
+                    const draggableWindows =
+                        document.querySelectorAll(".draggable-window");
+                    ds = new DragSelect({
+                        // selectables: undefined, // to be replaced with actual moveable icons
+                        area: area,
+                        draggability: false,
+                        usePointerEvents: true,
+                        selectorClass: "ds-selector",
+                        selectedClass: "ds-selected",
                     });
-                },
-                ignore: [".navbar, .navbar *"],
-            });
+
+                    window.ds = ds;
+                    draggableWindows.forEach((window) => {
+                        window.addEventListener(
+                            "mousedown",
+                            handleWindowMouseDown
+                        );
+                    });
+                }, 0);
+            }
+        }
+        function handleWindowMouseDown(e: Event) {
+            e.stopPropagation();
+            if (window.ds) {
+                window.ds.break();
+            }
+            const appName = (e.currentTarget as HTMLElement).getAttribute(
+                "data-app"
+            );
+            if (appName) {
+                updateZIndex(appName);
+            }
         }
 
-        onMounted(initDragSelect);
-        onUnmounted(() => {
-            if (ds) {
-                ds.stop();
-            }
+        onMounted(() => {
+            initDragSelect();
         });
 
-        // Reactively update DragSelect's selectables when apps change
+        onUnmounted(() => {
+            if (window.ds) {
+                window.ds.stop();
+            }
+            window.ds = null;
+        });
+
         watch(
             () => apps.map((app) => visibleApps[app.nickName]),
-            initDragSelect,
+            () => {
+                initDragSelect();
+            },
             { deep: true }
         );
 
@@ -191,28 +251,37 @@ export default defineComponent({
     bottom: 0;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end; /* Keeps the navbar at the bottom */
-    align-items: center;
-    padding: 20px 40px 0 40px;
+}
+
+.drag-select-area {
+    flex-grow: 1;
+    position: relative;
     background-image: url("./assets/Background.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
 }
 
 .navbar {
     max-width: 80%; /* Controls the width of the navigation bar */
     min-width: 12.5%;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     justify-content: space-between; /* Distributes space between app icons */
     background: rgba(255, 255, 255, 0.5);
     padding: 10px;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    width: 60px;
-    height: 60px;
+    z-index: 1000;
+
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    pointer-events: none;
 }
 
 .app-container {
@@ -222,6 +291,7 @@ export default defineComponent({
     align-items: center;
     cursor: pointer;
     transition: transform 0.3s ease;
+    pointer-events: auto;
 }
 
 .app-open-indicator {

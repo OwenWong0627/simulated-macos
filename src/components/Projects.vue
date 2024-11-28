@@ -1,5 +1,5 @@
 <template>
-    <div class="modal projects">
+    <div class="modal draggable-window" data-app="projects">
         <button @click="$emit('close')">Close</button>
         <iframe
             src="https://docs.google.com/presentation/d/e/2PACX-1vSgVmlLMIRpT5HdPMdCJs00LbrLkhf8hB3oe3AKj1XesZjO1RZTMVrXZtUJTr8gBUHJGiF7Sa_f9AZq/embed?start=false&loop=false&delayms=3000"

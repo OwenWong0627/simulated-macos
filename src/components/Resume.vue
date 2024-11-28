@@ -1,5 +1,5 @@
 <template>
-    <div class="modal resume">
+    <div class="modal draggable-window" data-app="resume">
         <button @click="$emit('close')">Close</button>
         <iframe :src="pdfUrl" frameborder="0" width="100%" height="600px">
             Your browser does not support PDFs. Please download the PDF to view

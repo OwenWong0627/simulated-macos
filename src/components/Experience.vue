@@ -1,5 +1,5 @@
 <template>
-    <div class="modal experience">
+    <div class="modal draggable-window" data-app="experience">
         <button @click="$emit('close')">Close</button>
         <h1>Experience</h1>
         <ul class="timeline">
