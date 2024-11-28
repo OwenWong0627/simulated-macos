@@ -27,7 +27,7 @@ export default {
     transform: translate(-50%, -50%);
     width: 80%;
     max-width: 800px;
-    z-index: 100;
+    z-index: 10;
     background: black;
     border: 1px solid #ccc;
     padding: 20px;

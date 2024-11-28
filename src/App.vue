@@ -13,6 +13,7 @@
         <!-- App windows -->
         <AboutMe
             v-if="visibleApps.aboutMe"
+            @updateZIndex="updateZIndex('aboutMe')"
             @close="closeApp('aboutMe')"
             class="draggable-window"
             :style="{ zIndex: zIndexes['aboutMe'] }"
@@ -207,6 +208,7 @@ export default defineComponent({
             handleMouseDown,
             handleMouseUp,
             handleMouseLeave,
+            updateZIndex,
         };
     },
 });
@@ -238,7 +240,6 @@ export default defineComponent({
     left: 10%; /* Initial left position for staggered arrangement */
     border: 1px solid #ccc;
     background: white;
-    padding: 15px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }

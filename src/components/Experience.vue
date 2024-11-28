@@ -49,7 +49,7 @@ export default {
     transform: translate(-50%, -20%);
     width: 80%;
     max-width: 600px;
-    z-index: 100;
+    z-index: 10;
     background: white;
     border: 1px solid #ccc;
     padding: 20px;
