@@ -48,7 +48,7 @@ export default defineComponent({
     height: 12px;
     border-radius: 50%;
     border: none;
-    cursor: pointer;
+    cursor: default;
     padding: 0;
 }
 

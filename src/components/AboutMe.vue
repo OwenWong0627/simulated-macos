@@ -9,7 +9,7 @@
             @close="$emit('close')"
             @minimize="toggleMinimize"
             @maximize="toggleMaximize"
-            @startDrag="startDrag($event)"
+            @startDrag="handleStartDrag($event)"
         />
         <div class="content" v-show="!isMinimized">
             <h1>About Me</h1>
@@ -21,14 +21,16 @@
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 import TitleBar from "./TitleBar.vue";
+import { startDrag } from "../utils/windowHelpers";
 
 export default defineComponent({
     components: { TitleBar },
     emits: ["close", "updateZIndex"],
-    setup(props, { emit }) {
+    setup(_, { emit }) {
         const isMinimized = ref(false);
         const isMaximized = ref(false);
         const originalSize = ref({ width: "300px", height: "200px" });
+        const topPercent = ref("50%");
 
         const toggleMinimize = () => {
             isMinimized.value = !isMinimized.value;
@@ -37,7 +39,7 @@ export default defineComponent({
         const toggleMaximize = () => {
             isMaximized.value = !isMaximized.value;
             const element = document.querySelector(
-                ".draggable-window"
+                `.draggable-window[data-app="aboutMe"]`
             ) as HTMLElement;
             if (isMaximized.value) {
                 originalSize.value = {
@@ -48,58 +50,53 @@ export default defineComponent({
                 element.style.height = "100%";
                 element.style.top = "0";
                 element.style.left = "0";
+                element.style.transform = "none";
             } else {
                 element.style.width = originalSize.value.width;
                 element.style.height = originalSize.value.height;
+                element.style.top = topPercent.value;
+                element.style.left = "50%";
+                element.style.transform = `translate(-50%, -${topPercent.value})`;
             }
         };
 
-        const startDrag = (event: MouseEvent) => {
-            event.preventDefault();
-            event.stopPropagation();
+        // const toggleMaximize = () => {
+        //     isMaximized.value = !isMaximized.value;
+        //     const element = document.querySelector(
+        //         ".draggable-window"
+        //     ) as HTMLElement;
+        //     if (isMaximized.value) {
+        //         originalSize.value = {
+        //             width: width.value,
+        //             height: height.value,
+        //         };
+        //         width.value = window.innerWidth;
+        //         height.value = window.innerHeight;
+        //         element.style.top = "0";
+        //         element.style.left = "0";
+        //         element.style.transform = "none";
+        //     } else {
+        //         width.value = originalSize.value.width;
+        //         height.value = originalSize.value.height;
+        //     }
+        // };
 
-            const element = (event.currentTarget as Element).closest(
-                ".draggable-window"
-            ) as HTMLElement;
-            if (!element) return;
-
-            if (window.ds && typeof window.ds.break === "function") {
-                window.ds.break();
+        const handleStartDrag = (event: MouseEvent) => {
+            if (window.ds) {
+                startDrag(
+                    event,
+                    event.currentTarget as Element,
+                    emit,
+                    window.ds
+                );
             }
-
-            let startX: number = event.clientX;
-            let startY: number = event.clientY;
-            let initialLeft = parseInt(
-                window.getComputedStyle(element).left,
-                10
-            );
-            let initialTop = parseInt(window.getComputedStyle(element).top, 10);
-
-            const onDragging = (moveEvent: MouseEvent) => {
-                const dx = moveEvent.clientX - startX;
-                const dy = moveEvent.clientY - startY;
-                element.style.left = `${initialLeft + dx}px`;
-                element.style.top = `${initialTop + dy}px`;
-                emit("updateZIndex");
-            };
-
-            const stopDrag = () => {
-                document.removeEventListener("mousemove", onDragging);
-                document.removeEventListener("mouseup", stopDrag);
-                if (window.ds && typeof window.ds.start === "function") {
-                    window.ds.start();
-                }
-            };
-
-            document.addEventListener("mousemove", onDragging);
-            document.addEventListener("mouseup", stopDrag);
         };
 
         return {
             isMinimized,
             toggleMinimize,
             toggleMaximize,
-            startDrag,
+            handleStartDrag,
         };
     },
 });
@@ -108,8 +105,9 @@ export default defineComponent({
 <style scoped>
 .modal {
     position: absolute;
-    top: 45%;
-    left: 44%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     background: white;
     border: 1px solid #ccc;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);

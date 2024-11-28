@@ -21,6 +21,7 @@
         />
         <Experience
             v-if="visibleApps.experience"
+            @updateZIndex="updateZIndex('experience')"
             @close="closeApp('experience')"
             class="draggable-window"
             :style="{ zIndex: zIndexes['experience'] }"
@@ -28,6 +29,7 @@
         />
         <Resume
             v-if="visibleApps.resume"
+            @updateZIndex="updateZIndex('resume')"
             @close="closeApp('resume')"
             class="draggable-window"
             :style="{ zIndex: zIndexes['resume'] }"
@@ -35,6 +37,7 @@
         />
         <Projects
             v-if="visibleApps.projects"
+            @updateZIndex="updateZIndex('projects')"
             @close="closeApp('projects')"
             class="draggable-window"
             :style="{ zIndex: zIndexes['projects'] }"
@@ -111,6 +114,7 @@ export default defineComponent({
         const updateZIndex = (appName: string) => {
             maxZIndex.value++;
             zIndexes[appName] = maxZIndex.value;
+            console.log(zIndexes);
         };
 
         const focusApp = (appName: string) => {
