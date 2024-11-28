@@ -1,5 +1,6 @@
 <template>
     <div class="homescreen-container">
+        <MenuBar />
         <div class="drag-select-area"></div>
         <Navbar
             :apps="apps"
@@ -61,6 +62,7 @@ import AboutMe from "./components/AboutMe.vue";
 import Experience from "./components/Experience.vue";
 import Resume from "./components/Resume.vue";
 import Projects from "./components/Projects.vue";
+import MenuBar from "./components/MenuBar.vue";
 import { App, VisibleApps, IsPressed, ZIndexes } from "./types";
 
 export default defineComponent({
@@ -70,6 +72,7 @@ export default defineComponent({
         Resume,
         Projects,
         Navbar,
+        MenuBar,
     },
     setup() {
         const apps = reactive<App[]>([

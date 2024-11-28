@@ -26,8 +26,11 @@ export function startDrag(
     const onDragging = (moveEvent: MouseEvent) => {
         const dx = moveEvent.clientX - startX;
         const dy = moveEvent.clientY - startY;
-        draggableWindow.style.left = `${initialLeft + dx}px`;
-        draggableWindow.style.top = `${initialTop + dy}px`;
+        const newLeft = initialLeft + dx;
+        const newTop = Math.max(24, initialTop + dy);
+
+        draggableWindow.style.left = `${newLeft}px`;
+        draggableWindow.style.top = `${newTop}px`;
         emit("updateZIndex");
     };
 

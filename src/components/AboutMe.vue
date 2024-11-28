@@ -47,9 +47,8 @@ export default defineComponent({
                     height: element.style.height,
                 };
                 element.style.width = "100%";
-                element.style.height = "calc(100% - 77px)";
-                console.log("element.style.height", element.style.height);
-                element.style.top = "0";
+                element.style.height = "calc(100% - 101px)";
+                element.style.top = "24px";
                 element.style.left = "0";
                 element.style.transform = "none";
             } else {
@@ -60,27 +59,6 @@ export default defineComponent({
                 element.style.transform = `translate(-50%, -${topPercent.value})`;
             }
         };
-
-        // const toggleMaximize = () => {
-        //     isMaximized.value = !isMaximized.value;
-        //     const element = document.querySelector(
-        //         ".draggable-window"
-        //     ) as HTMLElement;
-        //     if (isMaximized.value) {
-        //         originalSize.value = {
-        //             width: width.value,
-        //             height: height.value,
-        //         };
-        //         width.value = window.innerWidth;
-        //         height.value = window.innerHeight;
-        //         element.style.top = "0";
-        //         element.style.left = "0";
-        //         element.style.transform = "none";
-        //     } else {
-        //         width.value = originalSize.value.width;
-        //         height.value = originalSize.value.height;
-        //     }
-        // };
 
         const handleStartDrag = (event: MouseEvent) => {
             if (window.ds) {
