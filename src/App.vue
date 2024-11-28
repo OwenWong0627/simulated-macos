@@ -250,6 +250,5 @@ export default defineComponent({
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    pointer-events: none;
 }
 </style>
