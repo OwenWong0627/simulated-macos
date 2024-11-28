@@ -47,7 +47,8 @@ export default defineComponent({
                     height: element.style.height,
                 };
                 element.style.width = "100%";
-                element.style.height = "100%";
+                element.style.height = "calc(100% - 77px)";
+                console.log("element.style.height", element.style.height);
                 element.style.top = "0";
                 element.style.left = "0";
                 element.style.transform = "none";

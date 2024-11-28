@@ -1,16 +1,43 @@
 <template>
-    <div class="title-bar" @mousedown="$emit('startDrag', $event)">
+    <div class="title-bar" @mousedown="handleMouseDown">
         <div class="title-buttons">
-            <button class="close" @click="$emit('close')"></button>
-            <button class="minimize" @click="$emit('minimize')"></button>
-            <button class="maximize" @click="$emit('maximize')"></button>
+            <button
+                class="close"
+                @click="$emit('close')"
+                @mousedown="buttonPressed('close')"
+                @mouseup="buttonReleased()"
+                @mouseleave="buttonReleased()"
+                :class="{ pressed: pressedButton === 'close' }"
+            >
+                <span class="icon">✕</span>
+            </button>
+            <button
+                class="minimize"
+                @click="$emit('minimize')"
+                @mousedown="buttonPressed('minimize')"
+                @mouseup="buttonReleased()"
+                @mouseleave="buttonReleased()"
+                :class="{ pressed: pressedButton === 'minimize' }"
+            >
+                <span class="icon">−</span>
+            </button>
+            <button
+                class="maximize"
+                @click="$emit('maximize')"
+                @mousedown="buttonPressed('maximize')"
+                @mouseup="buttonReleased()"
+                @mouseleave="buttonReleased()"
+                :class="{ pressed: pressedButton === 'maximize' }"
+            >
+                <span class="icon">+</span>
+            </button>
         </div>
         <div class="title">{{ title }}</div>
     </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 
 export default defineComponent({
     props: {
@@ -20,6 +47,30 @@ export default defineComponent({
         },
     },
     emits: ["close", "minimize", "maximize", "startDrag"],
+    setup(_, { emit }) {
+        const pressedButton = ref<string | null>(null);
+
+        const buttonPressed = (button: string) => {
+            pressedButton.value = button;
+        };
+
+        const buttonReleased = () => {
+            pressedButton.value = null;
+        };
+
+        const handleMouseDown = (event: MouseEvent) => {
+            if (!(event.target as HTMLElement).closest(".title-buttons")) {
+                emit("startDrag", event);
+            }
+        };
+
+        return {
+            pressedButton,
+            buttonPressed,
+            buttonReleased,
+            handleMouseDown,
+        };
+    },
 });
 </script>
 
@@ -50,6 +101,8 @@ export default defineComponent({
     border: none;
     cursor: default;
     padding: 0;
+    position: relative;
+    overflow: hidden;
 }
 
 .close {
@@ -60,6 +113,30 @@ export default defineComponent({
 }
 .maximize {
     background-color: #27c93f;
+}
+
+.close.pressed {
+    background-color: #bf4b44;
+}
+.minimize.pressed {
+    background-color: #bf8e23;
+}
+.maximize.pressed {
+    background-color: #1d9730;
+}
+
+.icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 9px;
+    opacity: 0;
+}
+
+.title-buttons:hover .icon {
+    opacity: 1;
 }
 
 .title {

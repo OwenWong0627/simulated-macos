@@ -46,7 +46,7 @@ export default defineComponent({
         const toggleMaximize = () => {
             isMaximized.value = !isMaximized.value;
             const element = document.querySelector(
-                ".draggable-window"
+                `.draggable-window[data-app="projects"]`
             ) as HTMLElement;
             if (isMaximized.value) {
                 originalSize.value = {
@@ -54,7 +54,7 @@ export default defineComponent({
                     height: element.style.height,
                 };
                 element.style.width = "100%";
-                element.style.height = "100%";
+                element.style.height = "calc(100% - 77px)";
                 element.style.top = "0";
                 element.style.left = "0";
                 element.style.transform = "none";
@@ -99,6 +99,7 @@ export default defineComponent({
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    min-width: 300px;
 }
 
 .content {
