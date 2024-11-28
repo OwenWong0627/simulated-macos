@@ -1,24 +1,14 @@
 <template>
     <div class="homescreen-container">
         <div class="drag-select-area"></div>
-        <div class="navbar">
-            <div
-                v-for="app in apps"
-                :key="app.name"
-                class="app-container"
-                @mousedown="handleMouseDown(app.nickName)"
-                @mouseup="handleMouseUp(app.nickName)"
-                @mouseleave="handleMouseLeave(app.nickName)"
-                :class="{ pressed: isPressed[app.nickName] }"
-            >
-                <img :src="app.icon" :alt="app.name" class="app-icon" />
-                <div
-                    v-if="visibleApps[app.nickName]"
-                    class="app-open-indicator"
-                ></div>
-                <div class="tooltip">{{ app.name }}</div>
-            </div>
-        </div>
+        <Navbar
+            :apps="apps"
+            :visibleApps="visibleApps"
+            :isPressed="isPressed"
+            @mouseDown="handleMouseDown"
+            @mouseUp="handleMouseUp"
+            @mouseLeave="handleMouseLeave"
+        />
 
         <!-- App windows -->
         <AboutMe
@@ -61,29 +51,13 @@ import {
     onMounted,
     watch,
 } from "vue";
+import Navbar from "./components/Navbar.vue";
 import DragSelect from "dragselect";
 import AboutMe from "./components/AboutMe.vue";
 import Experience from "./components/Experience.vue";
 import Resume from "./components/Resume.vue";
 import Projects from "./components/Projects.vue";
-
-interface App {
-    name: string;
-    icon: string;
-    nickName: string;
-}
-
-interface VisibleApps {
-    [key: string]: boolean;
-}
-
-interface IsPressed {
-    [key: string]: boolean;
-}
-
-interface ZIndexes {
-    [key: string]: number;
-}
+import { App, VisibleApps, IsPressed, ZIndexes } from "./types";
 
 export default defineComponent({
     components: {
@@ -91,6 +65,7 @@ export default defineComponent({
         Experience,
         Resume,
         Projects,
+        Navbar,
     },
     setup() {
         const apps = reactive<App[]>([
@@ -137,14 +112,9 @@ export default defineComponent({
             zIndexes[appName] = maxZIndex.value;
         };
 
-        const toggleApp = (appName: string) => {
-            if (visibleApps[appName]) {
-                visibleApps[appName] = false;
-            } else {
-                visibleApps[appName] = true;
-                updateZIndex(appName);
-                console.log(zIndexes);
-            }
+        const focusApp = (appName: string) => {
+            visibleApps[appName] = true;
+            updateZIndex(appName);
         };
 
         const handleMouseDown = (appName: string) => {
@@ -152,7 +122,7 @@ export default defineComponent({
         };
         const handleMouseUp = (appName: string) => {
             if (isPressed[appName]) {
-                toggleApp(appName);
+                focusApp(appName);
                 isPressed[appName] = false;
             }
         };
@@ -230,7 +200,7 @@ export default defineComponent({
         return {
             apps,
             visibleApps,
-            toggleApp,
+            focusApp,
             closeApp,
             zIndexes,
             isPressed,
@@ -260,90 +230,6 @@ export default defineComponent({
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-}
-
-.navbar {
-    max-width: 80%; /* Controls the width of the navigation bar */
-    min-width: 12.5%;
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    justify-content: space-between; /* Distributes space between app icons */
-    background: rgba(255, 255, 255, 0.5);
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
-
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    pointer-events: none;
-}
-
-.app-container {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-    pointer-events: auto;
-}
-
-.app-open-indicator {
-    position: absolute;
-    bottom: -5px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    background-color: black;
-}
-
-.app-icon {
-    width: 57px;
-    height: 57px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.pressed .app-icon {
-    filter: brightness(70%);
-    opacity: 0.6;
-}
-
-.tooltip {
-    visibility: hidden;
-    width: 120px;
-    background-color: black;
-    color: white;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    position: absolute;
-    z-index: 1;
-    bottom: 100%;
-    left: 50%;
-    margin-left: -60px;
-    opacity: 0;
-    transition: opacity 0.3s;
-}
-
-.app-container:hover .tooltip {
-    visibility: visible;
-    opacity: 1;
-}
-
-.app-name {
-    margin-top: 8px;
-    font-size: 14px;
-    color: #333;
-    text-align: center;
 }
 
 .draggable-window {

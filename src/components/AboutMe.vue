@@ -12,9 +12,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-
-export default defineComponent({
+export default {
     methods: {
         startDrag(event: MouseEvent) {
             // Prevent the default behavior and stop propagation
@@ -57,7 +55,7 @@ export default defineComponent({
             document.addEventListener("mouseup", stopDrag);
         },
     },
-});
+};
 </script>
 
 <style scoped>
