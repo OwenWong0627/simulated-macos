@@ -1,7 +1,17 @@
 <template>
     <div class="homescreen-container">
-        <MenuBar />
-        <div class="drag-select-area"></div>
+        <MenuBar :activeWindow="currentActiveWindow" />
+        <div class="drag-select-area">
+            <div
+                v-for="app in apps"
+                :key="app.name"
+                class="desktop-icon"
+                @dblclick="focusApp(app.nickName)"
+            >
+                <img :src="app.icon" :alt="app.name" class="app-icon" />
+                <div class="app-name">{{ app.name }}</div>
+            </div>
+        </div>
         <Navbar
             :apps="apps"
             :visibleApps="visibleApps"
@@ -113,16 +123,28 @@ export default defineComponent({
         const isPressed = reactive<IsPressed>({});
         const zIndexes = reactive<ZIndexes>({});
         const maxZIndex = ref<number>(10);
+        const currentActiveWindow = ref<string>("Finder");
         let ds: DragSelect | null = null;
+
         const updateZIndex = (appName: string) => {
             maxZIndex.value++;
             zIndexes[appName] = maxZIndex.value;
-            console.log(zIndexes);
+            const app = apps.find((a) => a.nickName === appName);
+            if (app) {
+                currentActiveWindow.value = app.name;
+            }
         };
 
         const focusApp = (appName: string) => {
             visibleApps[appName] = true;
             updateZIndex(appName);
+        };
+        const closeApp = (appName: string) => {
+            visibleApps[appName] = false;
+
+            if (!Object.values(visibleApps).some((isOpen) => isOpen)) {
+                currentActiveWindow.value = "Finder";
+            }
         };
 
         const handleMouseDown = (appName: string) => {
@@ -134,13 +156,8 @@ export default defineComponent({
                 isPressed[appName] = false;
             }
         };
-
         const handleMouseLeave = (appName: string) => {
             isPressed[appName] = false;
-        };
-
-        const closeApp = (appName: string) => {
-            visibleApps[appName] = false;
         };
 
         function initDragSelect() {
@@ -152,18 +169,18 @@ export default defineComponent({
             if (area instanceof HTMLElement) {
                 // Use setTimeout to ensure all DOM elements are rendered
                 setTimeout(() => {
+                    ds = new DragSelect({
+                        selectables: Array.from(
+                            document.querySelectorAll(".desktop-icon")
+                        ),
+                        area: area,
+                        selectedClass: "selected-icon",
+                        hoverClass: "hovered-icon",
+                    });
+                    window.ds = ds;
+
                     const draggableWindows =
                         document.querySelectorAll(".draggable-window");
-                    ds = new DragSelect({
-                        // selectables: undefined, // to be replaced with actual moveable icons
-                        area: area,
-                        draggability: false,
-                        usePointerEvents: true,
-                        selectorClass: "ds-selector",
-                        selectedClass: "ds-selected",
-                    });
-
-                    window.ds = ds;
                     draggableWindows.forEach((window) => {
                         window.addEventListener(
                             "mousedown",
@@ -183,12 +200,26 @@ export default defineComponent({
             );
             if (appName) {
                 updateZIndex(appName);
+                const app = apps.find((a) => a.nickName === appName);
+                if (app) {
+                    currentActiveWindow.value = app.name;
+                }
             }
         }
 
         onMounted(() => {
             initDragSelect();
+            positionDesktopIcons();
         });
+
+        const positionDesktopIcons = () => {
+            const icons = document.querySelectorAll(".desktop-icon");
+            icons.forEach((icon, index) => {
+                const element = icon as HTMLElement;
+                element.style.top = `${100 + index * 100}px`;
+                element.style.left = "25px";
+            });
+        };
 
         onUnmounted(() => {
             if (window.ds) {
@@ -207,6 +238,7 @@ export default defineComponent({
 
         return {
             apps,
+            currentActiveWindow,
             visibleApps,
             focusApp,
             closeApp,
@@ -253,5 +285,46 @@ export default defineComponent({
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
+}
+
+.desktop-icon {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80px;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 5px;
+    transition: background-color 0.2s ease;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    cursor: default;
+}
+
+.desktop-icon .app-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 5px;
+    pointer-events: none;
+}
+
+.desktop-icon .app-name {
+    font-size: 12px;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.desktop-icon.selected-icon,
+.desktop-icon.selected-icon:hover {
+    background-color: rgba(50, 50, 255, 0.2);
+    border-radius: 4px;
+}
+
+.desktop-icon:hover {
+    background-color: rgba(97, 97, 97, 0.5);
+    border-radius: 4px;
 }
 </style>

@@ -5,6 +5,7 @@
             alt="Apple"
             class="apple-icon menu-item"
         />
+        <div class="menu-item current-window">{{ currentWindow }}</div>
         <div class="menu-item">File</div>
         <div class="menu-item">Edit</div>
         <div class="menu-item">View</div>
@@ -13,9 +14,25 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, computed } from "vue";
 
-export default defineComponent({});
+export default defineComponent({
+    props: {
+        activeWindow: {
+            type: String,
+            default: "",
+        },
+    },
+    setup(props) {
+        const currentWindow = computed(() => {
+            return props.activeWindow || "Finder";
+        });
+
+        return {
+            currentWindow,
+        };
+    },
+});
 </script>
 
 <style scoped>
@@ -48,5 +65,9 @@ export default defineComponent({});
     width: 16px;
     height: 16px;
     margin-right: 20px;
+}
+
+.current-window {
+    font-weight: bold;
 }
 </style>
