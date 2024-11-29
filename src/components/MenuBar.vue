@@ -1,7 +1,7 @@
 <template>
     <div class="menu-bar">
         <img
-            src="../../public/white-apple.svg"
+            src="../assets/white-apple.svg"
             alt="Apple"
             class="apple-icon menu-item"
         />
