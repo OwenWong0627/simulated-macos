@@ -3,20 +3,17 @@
         class="modal draggable-window"
         data-app="resume"
         :class="{ minimized: isMinimized }"
+        :style="componentStyle"
     >
         <TitleBar
-            title="Resume"
+            title="Owen Wong - Resume.pdf"
             @close="$emit('close')"
             @minimize="toggleMinimize"
             @maximize="toggleMaximize"
             @startDrag="handleStartDrag($event)"
         />
         <div class="content" v-show="!isMinimized">
-            <img
-                src="../assets/owen-wong-blank-resume.png"
-                alt="Resume"
-                class="resume-image"
-            />
+            <img src="../assets/resume.png" alt="Resume" class="resume-image" />
             <button @click="openPDF" class="pdf-button">Open PDF</button>
         </div>
     </div>
@@ -34,13 +31,12 @@ export default defineComponent({
         const isMinimized = ref(false);
         const isMaximized = ref(false);
         const originalSize = ref({ width: "0px", height: "0px" });
-        const topPercent = ref("20%");
         const pdfUrl = ref("/resume.pdf");
+        const componentStyle = ref({});
 
         onMounted(() => {
-            let width = 0;
-            let height = 0;
-            const aspectRatio = 595 / 950;
+            let width, height;
+            const aspectRatio = 595 / 920;
             const maxWidth = window.innerWidth * 0.8;
             const maxHeight = window.innerHeight * 0.8;
 
@@ -55,6 +51,11 @@ export default defineComponent({
             originalSize.value = {
                 width: width + "px",
                 height: height + "px",
+            };
+
+            componentStyle.value = {
+                width: originalSize.value.width,
+                height: originalSize.value.height,
             };
         });
 
@@ -80,9 +81,9 @@ export default defineComponent({
             } else {
                 element.style.width = originalSize.value.width;
                 element.style.height = originalSize.value.height;
-                element.style.top = topPercent.value;
+                element.style.top = "10%";
                 element.style.left = "50%";
-                element.style.transform = `translate(-50%, -${topPercent.value})`;
+                element.style.transform = `translate(-50%, 0)`;
             }
         };
 
@@ -108,6 +109,7 @@ export default defineComponent({
             handleStartDrag,
             pdfUrl,
             openPDF,
+            componentStyle,
         };
     },
 });
@@ -116,9 +118,9 @@ export default defineComponent({
 <style scoped>
 .modal {
     position: absolute;
-    top: 20%;
+    top: 10%;
     left: 50%;
-    transform: translate(-50%, -20%);
+    transform: translate(-50%, 0);
     background: white;
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -133,7 +135,6 @@ export default defineComponent({
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 20px;
 }
 
 .resume-image {
@@ -143,7 +144,6 @@ export default defineComponent({
 }
 
 .pdf-button {
-    margin-top: 10px;
     padding: 8px 16px;
     background-color: #007bff;
     color: white;

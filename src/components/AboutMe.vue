@@ -30,7 +30,6 @@ export default defineComponent({
         const isMinimized = ref(false);
         const isMaximized = ref(false);
         const originalSize = ref({ width: "300px", height: "200px" });
-        const topPercent = ref("50%");
 
         const toggleMinimize = () => {
             isMinimized.value = !isMinimized.value;
@@ -54,9 +53,9 @@ export default defineComponent({
             } else {
                 element.style.width = originalSize.value.width;
                 element.style.height = originalSize.value.height;
-                element.style.top = topPercent.value;
+                element.style.top = "40%";
                 element.style.left = "50%";
-                element.style.transform = `translate(-50%, -${topPercent.value})`;
+                element.style.transform = `translate(-50%, 0)`;
             }
         };
 
@@ -84,9 +83,9 @@ export default defineComponent({
 <style scoped>
 .modal {
     position: absolute;
-    top: 50%;
+    top: 40%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, 0);
     background: white;
     border: 1px solid #ccc;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);

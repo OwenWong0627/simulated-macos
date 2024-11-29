@@ -95,7 +95,7 @@ export default defineComponent({
             {
                 name: "Resume",
                 icon: new URL(
-                    "./assets/resume.png",
+                    "./assets/resumeIcon.png",
                     import.meta.url
                 ).toString(),
                 nickName: "resume",

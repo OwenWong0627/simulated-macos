@@ -36,7 +36,6 @@ export default defineComponent({
         const isMinimized = ref(false);
         const isMaximized = ref(false);
         const originalSize = ref({ width: "600px", height: "400px" });
-        const topPercent = ref("20%");
 
         const experience = ref([
             {
@@ -79,9 +78,9 @@ export default defineComponent({
             } else {
                 element.style.width = originalSize.value.width;
                 element.style.height = originalSize.value.height;
-                element.style.top = topPercent.value;
+                element.style.top = "30%";
                 element.style.left = "50%";
-                element.style.transform = `translate(-50%, -${topPercent.value})`;
+                element.style.transform = `translate(-50%, 0)`;
             }
         };
 
@@ -110,9 +109,9 @@ export default defineComponent({
 <style scoped>
 .modal {
     position: absolute;
-    top: 20%;
+    top: 30%;
     left: 50%;
-    transform: translate(-50%, -20%);
+    transform: translate(-50%, 0);
     background: white;
     border: 1px solid #ccc;
     border-radius: 8px;

@@ -2,7 +2,7 @@
     <div class="title-bar" @mousedown="handleMouseDown">
         <div class="title-buttons">
             <button
-                class="close"
+                class="title-button close"
                 @click="$emit('close')"
                 @mousedown="buttonPressed('close')"
                 @mouseup="buttonReleased()"
@@ -12,7 +12,7 @@
                 <span class="icon">✕</span>
             </button>
             <button
-                class="minimize"
+                class="title-button minimize"
                 @click="$emit('minimize')"
                 @mousedown="buttonPressed('minimize')"
                 @mouseup="buttonReleased()"
@@ -22,7 +22,7 @@
                 <span class="icon">−</span>
             </button>
             <button
-                class="maximize"
+                class="title-button maximize"
                 @click="$emit('maximize')"
                 @mousedown="buttonPressed('maximize')"
                 @mouseup="buttonReleased()"
@@ -59,7 +59,7 @@ export default defineComponent({
         };
 
         const handleMouseDown = (event: MouseEvent) => {
-            if (!(event.target as HTMLElement).closest(".title-buttons")) {
+            if (!(event.target as HTMLElement).closest(".title-button")) {
                 emit("startDrag", event);
             }
         };
