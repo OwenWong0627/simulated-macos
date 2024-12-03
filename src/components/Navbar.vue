@@ -66,13 +66,13 @@ export default defineComponent({
     max-width: 80%;
     min-width: 12.5%;
     position: absolute;
-    bottom: 0;
+    bottom: 1px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
     justify-content: space-between;
     background: rgba(255, 255, 255, 0.5);
-    padding: 10px;
+    padding: 8px;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     z-index: 1000;
@@ -106,8 +106,9 @@ export default defineComponent({
 }
 
 .app-icon {
-    width: 57px;
-    height: 57px;
+    width: 53px;
+    height: 53px;
+    margin-bottom: 6px;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
