@@ -4,10 +4,44 @@
         <meta charset="UTF-8" />
         <link rel="icon" type="image/svg+xml" href="/apple.svg" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Owen Wong's MacOS</title>
+        <title>Owen Wong's</title>
+        <meta
+            name="description"
+            content="Welcome to Owen Wong's personal website showcasing projects, skills, and interests."
+        />
+        <meta
+            name="keywords"
+            content="Owen Wong, personal website, portfolio, projects, Owen W, Owen, Owen Wang"
+        />
+        <meta name="robots" content="index, follow" />
+        <meta property="og:title" content="Owen Wong's Website" />
+        <meta
+            property="og:description"
+            content="Welcome to Owen Wong's personal website showcasing projects, skills, and interests."
+        />
+        <meta property="og:image" content="https://owen-wong.com/apple.svg" />
+        <!-- Replace with an actual image path -->
+        <meta property="og:url" content="https://owen-wong.com/" />
+
+        <!-- Structured Data -->
+        <script type="application/ld+json">
+            {
+                "@context": "http://schema.org",
+                "@type": "Person",
+                "name": "Owen Wong",
+                "url": "https://owen-wong.com",
+                "sameAs": ["http://www.linkedin.com/in/owen-wong"]
+            }
+        </script>
     </head>
     <body>
+        <header>
+            <h1>Welcome to Owen Wong's Website</h1>
+        </header>
         <div id="app"></div>
         <script type="module" src="/src/main.ts"></script>
+        <footer>
+            <p>&copy; 2024 Owen Wong. All rights reserved.</p>
+        </footer>
     </body>
 </html>
