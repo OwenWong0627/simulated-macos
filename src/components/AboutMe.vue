@@ -17,19 +17,19 @@
 
                 <!-- Photos -->
                 <div class="photo photo-1">
-                    <img src="../assets/profile.png" alt="Photo 1" />
+                    <img src="../assets/chill_guy.png" alt="Photo 1" />
                 </div>
                 <div class="photo photo-2">
-                    <img src="../assets/profile.png" alt="Photo 2" />
+                    <img src="../assets/chill_guy.png" alt="Photo 2" />
                 </div>
                 <div class="photo photo-3">
-                    <img src="../assets/profile.png" alt="Photo 3" />
+                    <img src="../assets/chill_guy.png" alt="Photo 3" />
                 </div>
                 <div class="photo photo-4">
-                    <img src="../assets/profile.png" alt="Photo 4" />
+                    <img src="../assets/chill_guy.png" alt="Photo 4" />
                 </div>
                 <div class="photo photo-5">
-                    <img src="../assets/profile.png" alt="Photo 5" />
+                    <img src="../assets/chill_guy.png" alt="Photo 5" />
                 </div>
 
                 <!-- Text Boxes -->
