@@ -66,7 +66,10 @@ export default defineComponent({
                 period: "September 2024 - Present",
                 description:
                     "Developed UI features for a crypto-wallet app with React Native & TypeScript, built secure Go API endpoints, and integrated Firebase/Redux for data persistence.",
-                icon: "src/assets/dandelion.png",
+                icon: new URL(
+                    "../assets/dandelion.png",
+                    import.meta.url
+                ).toString(),
             },
             {
                 id: 2,
@@ -75,7 +78,10 @@ export default defineComponent({
                 period: "January 2024 - April 2024",
                 description:
                     "Developed an Azure & .NET healthcare data app, migrated healthcare data from ELK to Power BI, and created NUnit unit tests.",
-                icon: "src/assets/ontario_health.png",
+                icon: new URL(
+                    "../assets/ontario-health.png",
+                    import.meta.url
+                ).toString(),
             },
             {
                 id: 3,
@@ -84,7 +90,10 @@ export default defineComponent({
                 period: "May 2023 - August 2023",
                 description:
                     "Implemented Java-based API endpoints for Ownersbox's Battle Pass system, redesigned user onboarding with React & TypeScript, and implemented Jest/Cucumber tests.",
-                icon: "src/assets/ownersbox.png",
+                icon: new URL(
+                    "../assets/ownersbox.png",
+                    import.meta.url
+                ).toString(),
             },
             {
                 id: 4,
@@ -93,7 +102,10 @@ export default defineComponent({
                 period: "May 2022 - August 2022",
                 description:
                     "Developed features for a React & ExpressJS app used by 10k+ health professionals, revamped login UX with AWS S3/Cognito, and implemented Cypress E2E tests.",
-                icon: "src/assets/unyte.png",
+                icon: new URL(
+                    "../assets/unyte.png",
+                    import.meta.url
+                ).toString(),
             },
         ]);
 

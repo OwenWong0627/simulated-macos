@@ -3,7 +3,7 @@
         <MenuBar :activeWindow="currentActiveWindow" />
         <div class="drag-select-area">
             <div
-                v-for="app in apps"
+                v-for="app in menuApps"
                 :key="app.name"
                 class="desktop-icon"
                 @dblclick="focusApp(app.nickName)"
@@ -89,7 +89,7 @@ export default defineComponent({
             {
                 name: "About Me",
                 icon: new URL(
-                    "./assets/profile.png",
+                    "./assets/chill_guy.png",
                     import.meta.url
                 ).toString(),
                 nickName: "aboutMe",
@@ -105,7 +105,41 @@ export default defineComponent({
             {
                 name: "Resume",
                 icon: new URL(
-                    "./assets/resumeIcon.png",
+                    "./assets/preview.png",
+                    import.meta.url
+                ).toString(),
+                nickName: "resume",
+            },
+            {
+                name: "Projects",
+                icon: new URL(
+                    "./assets/project.png",
+                    import.meta.url
+                ).toString(),
+                nickName: "projects",
+            },
+        ]);
+        const menuApps = reactive<App[]>([
+            {
+                name: "About Me",
+                icon: new URL(
+                    "./assets/chill_guy.png",
+                    import.meta.url
+                ).toString(),
+                nickName: "aboutMe",
+            },
+            {
+                name: "Experience",
+                icon: new URL(
+                    "./assets/experience.png",
+                    import.meta.url
+                ).toString(),
+                nickName: "experience",
+            },
+            {
+                name: "Resume",
+                icon: new URL(
+                    "./assets/previewPDF.png",
                     import.meta.url
                 ).toString(),
                 nickName: "resume",
@@ -238,6 +272,7 @@ export default defineComponent({
 
         return {
             apps,
+            menuApps,
             currentActiveWindow,
             visibleApps,
             focusApp,
@@ -275,8 +310,8 @@ export default defineComponent({
 
 .draggable-window {
     position: absolute;
-    top: 20%; /* Initial top position for better visibility */
-    left: 10%; /* Initial left position for staggered arrangement */
+    top: 20%;
+    left: 10%;
     border: 1px solid #ccc;
     background: white;
     border-radius: 8px;
@@ -305,8 +340,8 @@ export default defineComponent({
 }
 
 .desktop-icon .app-icon {
-    width: 48px;
-    height: 48px;
+    width: 53px;
+    height: 53px;
     margin-bottom: 5px;
     pointer-events: none;
 }

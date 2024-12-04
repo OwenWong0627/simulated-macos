@@ -64,7 +64,7 @@ export default defineComponent({
 <style>
 .navbar {
     max-width: 80%;
-    min-width: 12.5%;
+    min-width: 11%;
     position: absolute;
     bottom: 1px;
     left: 50%;
@@ -72,9 +72,12 @@ export default defineComponent({
     display: flex;
     justify-content: space-between;
     background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
     padding: 8px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     z-index: 1000;
 
     user-select: none;
@@ -110,12 +113,35 @@ export default defineComponent({
     height: 53px;
     margin-bottom: 6px;
     border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 0px;
+    background: transparent;
+    box-shadow: none;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .pressed .app-icon {
-    filter: brightness(70%);
-    opacity: 0.6;
+    filter: brightness(90%);
+    transform: scale(0.95);
+    box-shadow: none;
+}
+
+[alt="Projects"].app-icon {
+    transform: scale(0.95);
+}
+
+.pressed [alt="Projects"].app-icon {
+    transform: scale(0.9);
+}
+
+[alt="About Me"].app-icon {
+    background: linear-gradient(to bottom, #ffffff, #f5f5f5);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+}
+
+.pressed [alt="About Me"].app-icon {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.4);
 }
 
 .tooltip {
