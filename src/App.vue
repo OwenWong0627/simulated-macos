@@ -250,7 +250,7 @@ export default defineComponent({
             const icons = document.querySelectorAll(".desktop-icon");
             icons.forEach((icon, index) => {
                 const element = icon as HTMLElement;
-                element.style.top = `${100 + index * 100}px`;
+                element.style.top = `${50 + index * 100}px`;
                 element.style.left = "25px";
             });
         };
@@ -302,7 +302,7 @@ export default defineComponent({
 .drag-select-area {
     flex-grow: 1;
     position: relative;
-    background-image: url("./assets/Background.png");
+    background-image: url("./assets/background.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
