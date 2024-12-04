@@ -79,7 +79,7 @@ export default defineComponent({
                 description:
                     "Developed an Azure & .NET healthcare data app, migrated healthcare data from ELK to Power BI, and created NUnit unit tests.",
                 icon: new URL(
-                    "../assets/ontario-health.png",
+                    "../assets/ontario_health.png",
                     import.meta.url
                 ).toString(),
             },
