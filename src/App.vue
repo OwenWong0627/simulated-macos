@@ -227,6 +227,22 @@ export default defineComponent({
         const closeApp = (appName: string) => {
             visibleApps[appName] = false;
 
+            // Change to window with highest z-index that is still open
+            const openApps = Object.entries(visibleApps)
+                .filter(([, isOpen]) => isOpen)
+                .map(([appName]) => appName);
+            const highestZIndexApp = Object.entries(zIndexes)
+                .filter(([appName]) => openApps.includes(appName))
+                .sort((a, b) => b[1] - a[1])[0];
+            if (highestZIndexApp) {
+                currentActiveWindow.value =
+                    apps.find((app) => app.nickName === highestZIndexApp[0])
+                        ?.name || "Finder";
+            } else {
+                currentActiveWindow.value = "Finder";
+            }
+
+            // If no apps are open, set Finder as the active window
             if (!Object.values(visibleApps).some((isOpen) => isOpen)) {
                 currentActiveWindow.value = "Finder";
             }
