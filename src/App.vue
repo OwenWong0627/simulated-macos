@@ -172,10 +172,46 @@ export default defineComponent({
             new URL("./assets/chill_guy.png", import.meta.url).toString(),
             new URL("./assets/experience.png", import.meta.url).toString(),
             new URL("./assets/preview.png", import.meta.url).toString(),
+            new URL("./assets/previewPDF.png", import.meta.url).toString(),
             new URL("./assets/project.png", import.meta.url).toString(),
             new URL("./assets/previewPDF.png", import.meta.url).toString(),
             new URL("./assets/background.jpg", import.meta.url).toString(),
             new URL("./assets/resume.png", import.meta.url).toString(),
+            new URL("./assets/dandelion.png", import.meta.url).toString(),
+            new URL("./assets/ownersbox.png", import.meta.url).toString(),
+            new URL("./assets/ontario_health.png", import.meta.url).toString(),
+            new URL("./assets/unyte.png", import.meta.url).toString(),
+            new URL(
+                "./assets/personal_website.png",
+                import.meta.url
+            ).toString(),
+            new URL(
+                "./assets/poker_host_ledger.png",
+                import.meta.url
+            ).toString(),
+            new URL("./assets/BLM_Toronto.png", import.meta.url).toString(),
+            new URL("./assets/D00M.png", import.meta.url).toString(),
+            new URL(
+                "./assets/aboutMe/picture1.png",
+                import.meta.url
+            ).toString(),
+            new URL(
+                "./assets/aboutMe/picture2.png",
+                import.meta.url
+            ).toString(),
+            new URL(
+                "./assets/aboutMe/picture3.png",
+                import.meta.url
+            ).toString(),
+            new URL(
+                "./assets/aboutMe/picture4.png",
+                import.meta.url
+            ).toString(),
+            new URL(
+                "./assets/aboutMe/picture5.png",
+                import.meta.url
+            ).toString(),
+
             // Add any other static images used in your components
         ];
 
