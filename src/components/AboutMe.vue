@@ -17,19 +17,19 @@
 
                 <!-- Photos -->
                 <div class="photo photo-1">
-                    <img src="../assets/chill_guy.png" alt="Photo 1" />
+                    <img src="../assets/aboutMe/picture1.jpg" alt="Photo 1" />
                 </div>
                 <div class="photo photo-2">
-                    <img src="../assets/chill_guy.png" alt="Photo 2" />
+                    <img src="../assets/aboutMe/picture3.jpg" alt="Photo 2" />
                 </div>
                 <div class="photo photo-3">
-                    <img src="../assets/chill_guy.png" alt="Photo 3" />
+                    <img src="../assets/aboutMe/picture4.jpg" alt="Photo 3" />
                 </div>
                 <div class="photo photo-4">
-                    <img src="../assets/chill_guy.png" alt="Photo 4" />
+                    <img src="../assets/aboutMe/picture2.jpg" alt="Photo 4" />
                 </div>
                 <div class="photo photo-5">
-                    <img src="../assets/chill_guy.png" alt="Photo 5" />
+                    <img src="../assets/aboutMe/picture5.jpg" alt="Photo 5" />
                 </div>
 
                 <!-- Text Boxes -->
@@ -201,8 +201,8 @@ export default defineComponent({
 }
 
 .photo-4 {
-    width: 140px;
-    height: 140px;
+    width: 120px;
+    height: 160px;
     top: 360px;
     right: 110px;
 }
