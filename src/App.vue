@@ -50,9 +50,20 @@
             v-if="visibleApps.projects"
             @updateZIndex="updateZIndex('projects')"
             @close="closeApp('projects')"
+            @openProjectDetail="openProjectDetail"
             class="draggable-window"
             :style="{ zIndex: zIndexes['projects'] }"
             data-app="projects"
+        />
+        <ProjectDetail
+            v-for="project in openProjects"
+            :key="project.id"
+            :project="project"
+            @updateZIndex="updateZIndex(`project-${project.id}`)"
+            @close="closeProjectDetail(project.id)"
+            class="draggable-window"
+            :style="{ zIndex: zIndexes[`project-${project.id}`] }"
+            :data-app="`project-${project.id}`"
         />
     </div>
 </template>
@@ -72,8 +83,9 @@ import AboutMe from "./components/AboutMe.vue";
 import Experience from "./components/Experience.vue";
 import Resume from "./components/Resume.vue";
 import Projects from "./components/Projects.vue";
+import ProjectDetail from "./components/ProjectDetail.vue";
 import MenuBar from "./components/MenuBar.vue";
-import { App, VisibleApps, IsPressed, ZIndexes } from "./types";
+import { App, VisibleApps, IsPressed, ZIndexes, Project } from "./types";
 
 export default defineComponent({
     components: {
@@ -83,6 +95,7 @@ export default defineComponent({
         Projects,
         Navbar,
         MenuBar,
+        ProjectDetail,
     },
     setup() {
         const apps = reactive<App[]>([
@@ -153,12 +166,50 @@ export default defineComponent({
                 nickName: "projects",
             },
         ]);
+
+        const openProjects = ref<Array<Project>>([]);
         const visibleApps = reactive<VisibleApps>({});
         const isPressed = reactive<IsPressed>({});
         const zIndexes = reactive<ZIndexes>({});
         const maxZIndex = ref<number>(10);
         const currentActiveWindow = ref<string>("Finder");
         let ds: DragSelect | null = null;
+
+        const openProjectDetail = (project: Project) => {
+            if (!openProjects.value.find((p) => p.id === project.id)) {
+                openProjects.value.push(project);
+                updateZIndex(`project-${project.id}`);
+
+                setTimeout(() => {
+                    const projectWindow = document.querySelector(
+                        `.draggable-window[data-app="project-${project.id}"]`
+                    );
+                    if (projectWindow) {
+                        projectWindow.addEventListener(
+                            "mousedown",
+                            handleWindowMouseDown
+                        );
+                    }
+                }, 0);
+            }
+        };
+
+        const closeProjectDetail = (projectId: number) => {
+            const projectWindow = document.querySelector(
+                `.draggable-window[data-app="project-${projectId}"]`
+            );
+            if (projectWindow) {
+                projectWindow.removeEventListener(
+                    "mousedown",
+                    handleWindowMouseDown
+                );
+            }
+
+            openProjects.value = openProjects.value.filter(
+                (p) => p.id !== projectId
+            );
+            delete zIndexes[`project-${projectId}`];
+        };
 
         const updateZIndex = (appName: string) => {
             maxZIndex.value++;
@@ -273,6 +324,9 @@ export default defineComponent({
         return {
             apps,
             menuApps,
+            openProjects,
+            openProjectDetail,
+            closeProjectDetail,
             currentActiveWindow,
             visibleApps,
             focusApp,
@@ -311,7 +365,7 @@ export default defineComponent({
 .draggable-window {
     position: absolute;
     top: 20%;
-    left: 10%;
+    left: 30%;
     border: 1px solid #ccc;
     background: white;
     border-radius: 8px;

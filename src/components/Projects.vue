@@ -5,38 +5,81 @@
         :class="{ minimized: isMinimized }"
     >
         <TitleBar
-            title="Projects"
+            title="My Projects"
             @close="$emit('close')"
             @minimize="toggleMinimize"
             @maximize="toggleMaximize"
             @startDrag="handleStartDrag($event)"
         />
         <div class="content" v-show="!isMinimized">
-            <iframe
-                src="https://docs.google.com/presentation/d/e/2PACX-1vSgVmlLMIRpT5HdPMdCJs00LbrLkhf8hB3oe3AKj1XesZjO1RZTMVrXZtUJTr8gBUHJGiF7Sa_f9AZq/embed?start=false&loop=false&delayms=3000"
-                frameborder="0"
-                width="100%"
-                height="100%"
-                allowfullscreen="true"
-                mozallowfullscreen="true"
-                webkitallowfullscreen="true"
-            ></iframe>
+            <div class="projects-grid">
+                <div
+                    v-for="project in projects"
+                    :key="project.id"
+                    class="project-card"
+                    @click="openProjectDetail(project)"
+                >
+                    <img :src="project.image" :alt="project.title" />
+                    <h3>{{ project.title }}</h3>
+                    <p>{{ project.description }}</p>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, reactive, ref } from "vue";
 import TitleBar from "./TitleBar.vue";
 import { startDrag } from "../utils/windowHelpers";
+import { Project } from "../types";
 
 export default defineComponent({
     components: { TitleBar },
-    emits: ["close", "updateZIndex"],
+    emits: ["close", "updateZIndex", "openProjectDetail"],
     setup(_, { emit }) {
         const isMinimized = ref(false);
         const isMaximized = ref(false);
         const originalSize = ref({ width: "960px", height: "569px" });
+
+        const projects = reactive<Project[]>([
+            {
+                id: 1,
+                title: "Weather Sync",
+                description:
+                    "Real-time weather tracking with precise location-based forecasts",
+                technologies: ["Vue.js", "Tailwind CSS", "OpenWeatherMap API"],
+                image: new URL(
+                    "../assets/chill_guy.png",
+                    import.meta.url
+                ).toString(),
+                githubUrl: "https://github.com/OwenWong0627/",
+                liveUrl: "https://github.com/OwenWong0627/",
+            },
+            {
+                id: 2,
+                title: "Crypto Tracker",
+                description:
+                    "Cryptocurrency investment management and analysis platform",
+                technologies: ["Vue.js", "Tailwind CSS", "OpenWeatherMap API"],
+                image: new URL(
+                    "../assets/chill_guy.png",
+                    import.meta.url
+                ).toString(),
+                githubUrl: "https://github.com/OwenWong0627/",
+            },
+            {
+                id: 3,
+                title: "Social Insights",
+                description: "Comprehensive analytics and engagement dashboard",
+                technologies: ["Vue.js", "Tailwind CSS", "OpenWeatherMap API"],
+                image: new URL(
+                    "../assets/chill_guy.png",
+                    import.meta.url
+                ).toString(),
+                githubUrl: "https://github.com/OwenWong0627/",
+            },
+        ]);
 
         const toggleMinimize = () => {
             isMinimized.value = !isMinimized.value;
@@ -77,11 +120,17 @@ export default defineComponent({
             }
         };
 
+        const openProjectDetail = (project: any) => {
+            emit("openProjectDetail", project);
+        };
+
         return {
             isMinimized,
+            projects,
             toggleMinimize,
             toggleMaximize,
             handleStartDrag,
+            openProjectDetail,
         };
     },
 });
@@ -99,10 +148,57 @@ export default defineComponent({
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     min-width: 300px;
+    width: 1200px;
+    height: 800px;
 }
 
 .content {
     height: calc(100% - 28px);
+    overflow-y: auto;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 400px);
+    column-gap: 5rem;
+    row-gap: 2rem;
+    padding: 2rem;
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.project-card {
+    background: #f5f5f5;
+    width: 100%;
+    border-radius: 8px;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: transform 0.2s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.project-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.project-card h3 {
+    margin: 1rem 0;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.project-card p {
+    color: #666;
+    line-height: 1.4;
 }
 
 .minimized {
