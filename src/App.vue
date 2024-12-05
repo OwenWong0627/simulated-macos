@@ -86,6 +86,7 @@ import Projects from "./components/Projects.vue";
 import ProjectDetail from "./components/ProjectDetail.vue";
 import MenuBar from "./components/MenuBar.vue";
 import { App, VisibleApps, IsPressed, ZIndexes, Project } from "./types";
+import { preloadImages } from "./utils/preloader";
 
 export default defineComponent({
     components: {
@@ -166,6 +167,17 @@ export default defineComponent({
                 nickName: "projects",
             },
         ]);
+        const imagesToPreload = [
+            // Menu and desktop icons
+            new URL("./assets/chill_guy.png", import.meta.url).toString(),
+            new URL("./assets/experience.png", import.meta.url).toString(),
+            new URL("./assets/preview.png", import.meta.url).toString(),
+            new URL("./assets/project.png", import.meta.url).toString(),
+            new URL("./assets/previewPDF.png", import.meta.url).toString(),
+            new URL("./assets/background.jpg", import.meta.url).toString(),
+            new URL("./assets/resume.png", import.meta.url).toString(),
+            // Add any other static images used in your components
+        ];
 
         const openProjects = ref<Array<Project>>([]);
         const visibleApps = reactive<VisibleApps>({});
@@ -308,9 +320,21 @@ export default defineComponent({
             }
         }
 
+        const preloadAllImages = async () => {
+            await preloadImages(imagesToPreload);
+
+            const dynamicImages = document.querySelectorAll("img");
+            const dynamicImageUrls = Array.from(dynamicImages)
+                .map((img) => img.src)
+                .filter((src) => !imagesToPreload.includes(src));
+
+            await preloadImages(dynamicImageUrls);
+        };
+
         onMounted(() => {
             initDragSelect();
             positionDesktopIcons();
+            preloadAllImages();
         });
 
         const positionDesktopIcons = () => {
