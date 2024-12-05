@@ -144,6 +144,7 @@ export default defineComponent({
     grid-template-columns: 1.85fr 1fr;
     height: 100%;
     text-align: left;
+    animation: slideIn 0.4s ease-out;
 }
 
 .project-image {
@@ -197,6 +198,13 @@ export default defineComponent({
     border-radius: 20px;
     font-size: 0.9rem;
     color: #1d4ed8;
+    transition: all 0.2s ease;
+}
+
+.tech-tag:hover {
+    transform: translateY(-2px);
+    background: #e8e8e8;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .actions {
@@ -213,6 +221,34 @@ export default defineComponent({
     transition: all 0.2s ease;
     cursor: pointer;
     font-size: 0.9rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn:after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: -100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transition: 0.5s;
+}
+
+.btn:hover:after {
+    left: 100%;
 }
 
 .btn.primary {
@@ -229,5 +265,16 @@ export default defineComponent({
     height: 28px !important;
     min-height: 28px;
     overflow: hidden;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 </style>

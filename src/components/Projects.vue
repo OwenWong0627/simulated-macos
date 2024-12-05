@@ -204,6 +204,21 @@ export default defineComponent({
     cursor: pointer;
     transition: transform 0.2s;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    animation: fadeInUp 0.5s ease-out;
+    animation-fill-mode: both;
+}
+
+.project-card:nth-child(1) {
+    animation-delay: 0.1s;
+}
+.project-card:nth-child(2) {
+    animation-delay: 0.2s;
+}
+.project-card:nth-child(3) {
+    animation-delay: 0.3s;
+}
+.project-card:nth-child(4) {
+    animation-delay: 0.4s;
 }
 
 .project-card:hover {
@@ -233,5 +248,16 @@ export default defineComponent({
     height: 28px !important;
     min-height: 28px;
     overflow: hidden;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 </style>
