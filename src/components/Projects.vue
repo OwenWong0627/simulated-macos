@@ -45,36 +45,64 @@ export default defineComponent({
         const projects = reactive<Project[]>([
             {
                 id: 1,
-                title: "Weather Sync",
+                title: "Personal Website",
                 description:
-                    "Real-time weather tracking with precise location-based forecasts",
-                technologies: ["Vue.js", "Tailwind CSS", "OpenWeatherMap API"],
+                    "A personal website to showcase my projects and skills",
+                technologies: ["VueJS", "Typescript", "Vite", "Tailwind CSS"],
                 image: new URL(
-                    "../assets/chill_guy.png",
+                    "../assets/personal_website.png",
                     import.meta.url
                 ).toString(),
-                githubUrl: "https://github.com/OwenWong0627/",
-                liveUrl: "https://github.com/OwenWong0627/",
+                githubUrl: "https://github.com/OwenWong0627/Poker-Host-Ledger",
             },
             {
                 id: 2,
-                title: "Crypto Tracker",
+                title: "Poker Host Ledger",
                 description:
-                    "Cryptocurrency investment management and analysis platform",
-                technologies: ["Vue.js", "Tailwind CSS", "OpenWeatherMap API"],
+                    "A mobile app to manage poker games and track player balances",
+                technologies: [
+                    "React Native",
+                    "Typescript",
+                    "Redux",
+                    "SQLite",
+                    "Expo",
+                ],
                 image: new URL(
-                    "../assets/chill_guy.png",
+                    "../assets/poker_host_ledger.png",
+                    import.meta.url
+                ).toString(),
+                githubUrl: "https://github.com/OwenWong0627/Poker-Host-Ledger",
+            },
+            {
+                id: 3,
+                title: "D00M",
+                description:
+                    "A mobile app to track screen time usage, set limits, and boost productivity",
+                technologies: [
+                    "React Native",
+                    "Typescript",
+                    "Firebase",
+                    "Expo",
+                ],
+                image: new URL(
+                    "../assets/D00M.png",
                     import.meta.url
                 ).toString(),
                 githubUrl: "https://github.com/OwenWong0627/",
             },
             {
-                id: 3,
-                title: "Social Insights",
-                description: "Comprehensive analytics and engagement dashboard",
-                technologies: ["Vue.js", "Tailwind CSS", "OpenWeatherMap API"],
+                id: 4,
+                title: "BLM-Toronto",
+                description:
+                    "BLM-Toronto aims to allow the general public easier access to the locations of black-owned businesses to potentially support them.",
+                technologies: [
+                    "React",
+                    "Javascript",
+                    "Google Maps API",
+                    "Firebase",
+                ],
                 image: new URL(
-                    "../assets/chill_guy.png",
+                    "../assets/BLM_Toronto.png",
                     import.meta.url
                 ).toString(),
                 githubUrl: "https://github.com/OwenWong0627/",
@@ -186,7 +214,7 @@ export default defineComponent({
 .project-card img {
     width: 100%;
     height: 250px;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 4px;
 }
 
