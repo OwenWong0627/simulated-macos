@@ -13,7 +13,7 @@
         />
         <div class="content" v-show="!isMinimized">
             <div class="notebook-container" :class="{ maximized: isMaximized }">
-                <h2 class="notebook-title">about me !!</h2>
+                <h2 class="notebook-title">a little about me ...</h2>
 
                 <!-- Photos -->
                 <div class="photo photo-1">
@@ -158,13 +158,14 @@ export default defineComponent({
 .notebook-title {
     font-size: 24px;
     margin-top: 0px;
-    margin-left: 150px;
+    margin-left: 200px;
 }
 
 .photo {
     position: absolute;
-    background: #333;
-    padding: 8px;
+    background: #5c4033;
+    border-radius: 6px;
+    padding: 10px;
     border: 1px solid #ddd;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     display: flex;
@@ -248,11 +249,13 @@ export default defineComponent({
 .star-1 {
     top: 60px;
     right: 75px;
+    transform: rotate(15deg);
 }
 
 .star-2 {
     top: 165px;
     left: 50px;
+    transform: rotate(-15deg);
 }
 
 .star-3 {
