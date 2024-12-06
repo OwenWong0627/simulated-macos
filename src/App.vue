@@ -1,5 +1,6 @@
 <template>
     <div class="homescreen-container">
+        <SpeedInsights />
         <MenuBar :activeWindow="currentActiveWindow" />
         <div class="drag-select-area">
             <div
@@ -85,6 +86,7 @@ import Resume from "./components/Resume.vue";
 import Projects from "./components/Projects.vue";
 import ProjectDetail from "./components/ProjectDetail.vue";
 import MenuBar from "./components/MenuBar.vue";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { App, VisibleApps, IsPressed, ZIndexes, Project } from "./types";
 
 export default defineComponent({
@@ -96,6 +98,7 @@ export default defineComponent({
         Navbar,
         MenuBar,
         ProjectDetail,
+        SpeedInsights,
     },
     setup() {
         const apps = reactive<App[]>([
