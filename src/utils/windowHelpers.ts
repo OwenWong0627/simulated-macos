@@ -27,7 +27,7 @@ export function startDrag(
         const dx = moveEvent.clientX - startX;
         const dy = moveEvent.clientY - startY;
         const newLeft = initialLeft + dx;
-        const newTop = Math.max(24, initialTop + dy);
+        const newTop = Math.max(30, initialTop + dy);
 
         draggableWindow.style.left = `${newLeft}px`;
         draggableWindow.style.top = `${newTop}px`;
