@@ -69,6 +69,10 @@
     </div>
 </template>
 
+<script setup lang="ts">
+import { SpeedInsights } from "@vercel/speed-insights/vue";
+</script>
+
 <script lang="ts">
 import {
     defineComponent,
@@ -86,7 +90,6 @@ import Resume from "./components/Resume.vue";
 import Projects from "./components/Projects.vue";
 import ProjectDetail from "./components/ProjectDetail.vue";
 import MenuBar from "./components/MenuBar.vue";
-import { SpeedInsights } from "@vercel/speed-insights/vue";
 import { App, VisibleApps, IsPressed, ZIndexes, Project } from "./types";
 
 export default defineComponent({
