@@ -50,7 +50,7 @@ export default defineComponent({
                     "A personal website to showcase my projects and skills",
                 technologies: ["VueJS", "Typescript", "Vite", "Tailwind CSS"],
                 image: new URL(
-                    "../assets/personal_website.png",
+                    "../assets/projects/personal_website.png",
                     import.meta.url
                 ).toString(),
                 githubUrl: "https://github.com/OwenWong0627/Poker-Host-Ledger",
@@ -68,7 +68,7 @@ export default defineComponent({
                     "Expo",
                 ],
                 image: new URL(
-                    "../assets/poker_host_ledger.png",
+                    "../assets/projects/poker_host_ledger.png",
                     import.meta.url
                 ).toString(),
                 githubUrl: "https://github.com/OwenWong0627/Poker-Host-Ledger",
@@ -85,7 +85,7 @@ export default defineComponent({
                     "Expo",
                 ],
                 image: new URL(
-                    "../assets/D00M.png",
+                    "../assets/projects/D00M.png",
                     import.meta.url
                 ).toString(),
                 githubUrl: "https://github.com/OwenWong0627/",
@@ -102,7 +102,7 @@ export default defineComponent({
                     "Firebase",
                 ],
                 image: new URL(
-                    "../assets/BLM_Toronto.png",
+                    "../assets/projects/BLM_Toronto.png",
                     import.meta.url
                 ).toString(),
                 githubUrl: "https://github.com/OwenWong0627/",

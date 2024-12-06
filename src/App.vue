@@ -102,7 +102,7 @@ export default defineComponent({
             {
                 name: "About Me",
                 icon: new URL(
-                    "./assets/chill_guy.png",
+                    "./assets/customApps/chill_guy.png",
                     import.meta.url
                 ).toString(),
                 nickName: "aboutMe",
@@ -110,7 +110,7 @@ export default defineComponent({
             {
                 name: "Experience",
                 icon: new URL(
-                    "./assets/experience.png",
+                    "./assets/customApps/experience.png",
                     import.meta.url
                 ).toString(),
                 nickName: "experience",
@@ -118,7 +118,7 @@ export default defineComponent({
             {
                 name: "Resume",
                 icon: new URL(
-                    "./assets/preview.png",
+                    "./assets/customApps/preview.png",
                     import.meta.url
                 ).toString(),
                 nickName: "resume",
@@ -126,7 +126,7 @@ export default defineComponent({
             {
                 name: "Projects",
                 icon: new URL(
-                    "./assets/project.png",
+                    "./assets/customApps/project.png",
                     import.meta.url
                 ).toString(),
                 nickName: "projects",
@@ -136,7 +136,7 @@ export default defineComponent({
             {
                 name: "About Me",
                 icon: new URL(
-                    "./assets/chill_guy.png",
+                    "./assets/customApps/chill_guy.png",
                     import.meta.url
                 ).toString(),
                 nickName: "aboutMe",
@@ -144,7 +144,7 @@ export default defineComponent({
             {
                 name: "Experience",
                 icon: new URL(
-                    "./assets/experience.png",
+                    "./assets/customApps/experience.png",
                     import.meta.url
                 ).toString(),
                 nickName: "experience",
@@ -152,7 +152,7 @@ export default defineComponent({
             {
                 name: "Resume",
                 icon: new URL(
-                    "./assets/previewPDF.png",
+                    "./assets/customApps/previewPDF.png",
                     import.meta.url
                 ).toString(),
                 nickName: "resume",
@@ -160,7 +160,7 @@ export default defineComponent({
             {
                 name: "Projects",
                 icon: new URL(
-                    "./assets/project.png",
+                    "./assets/customApps/project.png",
                     import.meta.url
                 ).toString(),
                 nickName: "projects",

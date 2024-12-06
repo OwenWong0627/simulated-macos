@@ -67,7 +67,7 @@ export default defineComponent({
                 description:
                     "Developed UI features for a crypto-wallet app with React Native & TypeScript, built secure Go API endpoints, and integrated Firebase/Redux for data persistence.",
                 icon: new URL(
-                    "../assets/dandelion.png",
+                    "../assets/experience/dandelion.png",
                     import.meta.url
                 ).toString(),
             },
@@ -79,7 +79,7 @@ export default defineComponent({
                 description:
                     "Developed an Azure & .NET healthcare data app, migrated healthcare data from ELK to Power BI, and created NUnit unit tests.",
                 icon: new URL(
-                    "../assets/ontario_health.png",
+                    "../assets/experience/ontario_health.png",
                     import.meta.url
                 ).toString(),
             },
@@ -91,7 +91,7 @@ export default defineComponent({
                 description:
                     "Implemented Java-based API endpoints for Ownersbox's Battle Pass system, redesigned user onboarding with React & TypeScript, and implemented Jest/Cucumber tests.",
                 icon: new URL(
-                    "../assets/ownersbox.png",
+                    "../assets/experience/ownersbox.png",
                     import.meta.url
                 ).toString(),
             },
@@ -103,7 +103,7 @@ export default defineComponent({
                 description:
                     "Developed features for a React & ExpressJS app used by 10k+ health professionals, revamped login UX with AWS S3/Cognito, and implemented Cypress E2E tests.",
                 icon: new URL(
-                    "../assets/unyte.png",
+                    "../assets/experience/unyte.png",
                     import.meta.url
                 ).toString(),
             },
