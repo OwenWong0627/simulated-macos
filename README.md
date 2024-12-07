@@ -1,5 +1,22 @@
-# Vue 3 + TypeScript + Vite
+# Simulated macOS Personal Website
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+A personal website designed to replicate the macOS desktop experience, built with Vue 3, TypeScript, and Vite. This interactive portfolio presents my work and information through a familiar operating system interface.
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+## Tech Stack
+
+- Vue 3 with Composition API
+- TypeScript for type safety
+- Vite for fast development and building
+- CSS for macOS-style animations and transitions
+
+## Development
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
