@@ -260,7 +260,7 @@ export default defineComponent({
 
 <style>
 .navbar {
-    max-width: 80%;
+    max-width: 100%;
     min-width: 11%;
     position: absolute;
     bottom: 1px;
@@ -268,7 +268,7 @@ export default defineComponent({
     transform: translateX(-50%);
     display: flex;
     justify-content: space-between;
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.35);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.5);
