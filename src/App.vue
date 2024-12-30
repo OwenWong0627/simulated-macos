@@ -311,9 +311,31 @@ export default defineComponent({
             }
         }
 
+        const handleExternalMessage = (event: MessageEvent) => {
+            console.log("Received message from external source:", event);
+            // if (event.origin !== "http://your-trusted-origin.com") return;
+
+            const { action } = JSON.parse(event.data);
+
+            switch (action) {
+                case "aboutMe":
+                    focusApp("aboutMe");
+                    break;
+                case "experience":
+                    focusApp("experience");
+                    break;
+                case "project":
+                    focusApp("project");
+                    break;
+                default:
+                    console.log("Unknown action received");
+            }
+        };
+
         onMounted(() => {
             initDragSelect();
             positionDesktopIcons();
+            window.addEventListener("message", handleExternalMessage);
         });
 
         const positionDesktopIcons = () => {
@@ -330,6 +352,7 @@ export default defineComponent({
                 window.ds.stop();
             }
             window.ds = null;
+            window.removeEventListener("message", handleExternalMessage);
         });
 
         watch(
