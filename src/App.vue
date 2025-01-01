@@ -318,14 +318,14 @@ export default defineComponent({
             const { action } = JSON.parse(event.data);
 
             switch (action) {
-                case "aboutMe":
+                case "about-me":
                     focusApp("aboutMe");
                     break;
                 case "experience":
                     focusApp("experience");
                     break;
                 case "project":
-                    focusApp("project");
+                    focusApp("projects");
                     break;
                 default:
                     console.log("Unknown action received");
