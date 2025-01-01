@@ -331,7 +331,7 @@ export default defineComponent({
                     focusApp("experience");
                     break;
                 case "projects":
-                    focusApp("project");
+                    focusApp("projects");
                     break;
                 default:
                     console.log("Unknown action received");
