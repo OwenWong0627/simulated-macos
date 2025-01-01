@@ -313,7 +313,13 @@ export default defineComponent({
 
         const handleExternalMessage = (event: MessageEvent) => {
             console.log("Received message from external source:", event);
-            // if (event.origin !== "http://your-trusted-origin.com") return;
+            if (
+                !(
+                    event.origin === "http://localhost:3000" ||
+                    event.origin === "http://owen-wong.com/"
+                )
+            )
+                return;
 
             const { action } = JSON.parse(event.data);
 
