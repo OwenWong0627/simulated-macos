@@ -333,6 +333,11 @@ export default defineComponent({
                 case "projects":
                     focusApp("projects");
                     break;
+                case "reset":
+                    visibleApps.aboutMe = false;
+                    visibleApps.experience = false;
+                    visibleApps.projects = false;
+                    break;
                 default:
                     console.log("Unknown action received");
             }
