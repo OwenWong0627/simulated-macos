@@ -330,8 +330,8 @@ export default defineComponent({
                 case "experience":
                     focusApp("experience");
                     break;
-                case "project":
-                    focusApp("projects");
+                case "projects":
+                    focusApp("project");
                     break;
                 default:
                     console.log("Unknown action received");
