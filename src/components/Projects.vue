@@ -131,7 +131,7 @@ export default defineComponent({
             } else {
                 element.style.width = originalSize.value.width;
                 element.style.height = originalSize.value.height;
-                element.style.top = "20%";
+                element.style.top = "5%";
                 element.style.left = "50%";
                 element.style.transform = `translate(-50%, 0)`;
             }
@@ -167,7 +167,7 @@ export default defineComponent({
 <style scoped>
 .modal {
     position: absolute;
-    top: 20%;
+    top: 5%;
     left: 50%;
     transform: translate(-50%, 0);
     background: white;

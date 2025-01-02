@@ -129,7 +129,7 @@ export default defineComponent({
 .modal {
     width: 1100px;
     height: 600px;
-    top: 25%;
+    top: 11%;
     left: 50%;
     transform: translate(-50%, 0);
 }
