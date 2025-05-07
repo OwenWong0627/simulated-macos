@@ -62,8 +62,20 @@ export default defineComponent({
             {
                 id: 1,
                 title: "SWE Intern",
+                company: "Hubspot",
+                period: "May 2025 - Present",
+                description:
+                    "Excited to work on the Flywheel Product team at Hubspot to develop internal tools!!",
+                icon: new URL(
+                    "../assets/experience/hubspot.png",
+                    import.meta.url
+                ).toString(),
+            },
+            {
+                id: 2,
+                title: "SWE Intern",
                 company: "Dandelion Networks",
-                period: "September 2024 - Present",
+                period: "September 2024 - December 2024",
                 description:
                     "Developed UI features for a crypto-wallet app with React Native & TypeScript, built secure Go API endpoints, and integrated Firebase/Redux for data persistence.",
                 icon: new URL(
@@ -72,7 +84,7 @@ export default defineComponent({
                 ).toString(),
             },
             {
-                id: 2,
+                id: 3,
                 title: "SWE Intern",
                 company: "Ontario Health",
                 period: "January 2024 - April 2024",
@@ -84,7 +96,7 @@ export default defineComponent({
                 ).toString(),
             },
             {
-                id: 3,
+                id: 4,
                 title: "SWE Intern",
                 company: "Ownersbox",
                 period: "May 2023 - August 2023",
@@ -96,7 +108,7 @@ export default defineComponent({
                 ).toString(),
             },
             {
-                id: 4,
+                id: 5,
                 title: "SWE Intern",
                 company: "Unyte Health",
                 period: "May 2022 - August 2022",
